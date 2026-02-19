@@ -2,58 +2,42 @@
 /**
  * @file main.cpp
  * @brief Embedded Distance Measurement using Ultrasonic Sensor
- * @author YOUR_NAME
- * @date YYYY-MM-DD
+ * @author Akhil
+ * @date 19-02-2026
  *
  * @details
  * Measures distance using HC-SR04 ultrasonic sensor
  * and displays structured output via Serial Monitor.
  */
 
- // TODO 1:
- // Define TRIG pin (Use pin 9)
+#define TRIG_PIN 9
+#define ECHO_PIN 10
 
- // TODO 2:
- // Define ECHO pin (Use pin 10)
-
- // TODO 3:
- // Create variable to store duration
-
- // TODO 4:
- // Create variable to store calculated distance
+unsigned long duration;
+float distance;
 
 void setup() {
-
-    // TODO 5:
-    // Initialize Serial communication (9600 baud rate)
-
-    // TODO 6:
-    // Configure TRIG as OUTPUT
-
-    // TODO 7:
-    // Configure ECHO as INPUT
-
-    // TODO 8:
-    // Print system initialization message
+    Serial.begin(9600);
+    pinMode(TRIG_PIN, OUTPUT);
+    pinMode(ECHO_PIN, INPUT);
+    Serial.println("System Initialized: Ultrasonic Sensor Ready");
 }
 
 void loop() {
+    digitalWrite(TRIG_PIN, LOW);
+    delayMicroseconds(2);
 
-    // TODO 9:
-    // Set TRIG LOW for 2 microseconds
+    digitalWrite(TRIG_PIN, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIG_PIN, LOW);
 
-    // TODO 10:
-    // Send 10 microsecond pulse on TRIG
+    duration = pulseIn(ECHO_PIN, HIGH);
 
-    // TODO 11:
-    // Measure pulse duration on ECHO using pulseIn()
+    distance = (duration * 0.0343) / 2;
 
-    // TODO 12:
-    // Calculate distance in cm
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" cm");
 
-    // TODO 13:
-    // Print calculated distance
-
-    // TODO 14:
-    // Add delay (500ms)
+    delay(500);
 }
